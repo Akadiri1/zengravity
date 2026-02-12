@@ -10,8 +10,8 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 
 body {
     -webkit-text-size-adjust: none;
-    background-color: #050505;
-    color: #a1a1aa;
+    background-color: #f4f4f5;
+    color: #3f3f46;
     height: 100%;
     line-height: 1.4;
     margin: 0;
@@ -28,7 +28,7 @@ blockquote {
 }
 
 a {
-    color: #6366f1;
+    color: #4f46e5;
 }
 
 a img {
@@ -38,7 +38,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #ffffff;
+    color: #18181b;
     font-size: 18px;
     font-weight: bold;
     margin-top: 0;
@@ -80,7 +80,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #050505;
+    background-color: #f4f4f5;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -103,7 +103,7 @@ img {
 }
 
 .header a {
-    color: #ffffff;
+    color: #18181b;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
@@ -125,9 +125,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #050505;
-    border-bottom: 1px solid #18181b;
-    border-top: 1px solid #18181b;
+    background-color: #f4f4f5;
+    border-bottom: 1px solid #e4e4e7;
+    border-top: 1px solid #e4e4e7;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -137,10 +137,11 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
-    background-color: #0a0a0a;
-    border-color: #18181b;
+    background-color: #ffffff;
+    border-color: #e4e4e7;
     border-radius: 12px;
     border-width: 1px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     padding: 0;
     width: 570px;
@@ -153,7 +154,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #18181b;
+    border-top: 1px solid #e4e4e7;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -196,13 +197,13 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #18181b;
+    border-bottom: 1px solid #e4e4e7;
     margin: 0;
     padding-bottom: 8px;
 }
 
 .table td {
-    color: #a1a1aa;
+    color: #3f3f46;
     font-size: 15px;
     line-height: 18px;
     margin: 0;
@@ -230,7 +231,7 @@ img {
 .button {
     -webkit-text-size-adjust: none;
     border-radius: 8px;
-    color: #fff;
+    color: #fff !important;
     display: inline-block;
     overflow: hidden;
     text-decoration: none;
@@ -238,11 +239,11 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #6366f1;
-    border-bottom: 10px solid #6366f1;
-    border-left: 20px solid #6366f1;
-    border-right: 20px solid #6366f1;
-    border-top: 10px solid #6366f1;
+    background-color: #4f46e5;
+    border-bottom: 10px solid #4f46e5;
+    border-left: 20px solid #4f46e5;
+    border-right: 20px solid #4f46e5;
+    border-top: 10px solid #4f46e5;
 }
 
 .button-green,
@@ -266,18 +267,18 @@ img {
 /* Panels */
 
 .panel {
-    border-left: #6366f1 solid 4px;
+    border-left: #4f46e5 solid 4px;
     margin: 21px 0;
 }
 
 .panel-content {
-    background-color: #18181b;
-    color: #a1a1aa;
+    background-color: #f8fafc;
+    color: #3f3f46;
     padding: 16px;
 }
 
 .panel-content p {
-    color: #a1a1aa;
+    color: #3f3f46;
 }
 
 .panel-item {

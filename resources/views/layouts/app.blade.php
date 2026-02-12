@@ -29,9 +29,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <span class="text-sm font-black text-white tracking-tighter uppercase" 
-                          style="text-shadow: -1px -0.5px 0 rgba(255,0,0,0.4), 1px 0.5px 0 rgba(0,255,255,0.4);">
-                        ZEN<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 font-mono" style="text-shadow:none;">GRAVITY</span>
+                    <span class="text-lg font-black text-white tracking-tighter uppercase leading-none" 
+                          style="text-shadow: -1.5px -0.5px 0 rgba(255,0,0,0.5), 1.5px 0.5px 0 rgba(0,255,255,0.5);">
+                        ZEN<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 font-mono typewriter inline-block" style="text-shadow:none;">GRAVITY</span>
                     </span>
                     @auth
                     <div class="flex items-center gap-2">
