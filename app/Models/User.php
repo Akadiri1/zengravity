@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, Billable;
@@ -25,10 +25,9 @@ class User extends Authenticatable
         'password',
         'google_id',
         'avatar',
-        'scans_used',
-        'matches_used',
-        'hives_used',
-        'usage_reset_at',
+        'trial_ends_at',
+        'daily_tokens_remaining',
+        'last_token_reset_at',
     ];
 
     /**
@@ -51,8 +50,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'usage_reset_at' => 'datetime',
+            'trial_ends_at' => 'datetime',
+            'last_token_reset_at' => 'datetime',
         ];
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            // Give 7 days trial
+            $user->trial_ends_at = now()->addDays(7);
+            $user->save();
+        });
     }
 
     public function scans()
@@ -64,42 +73,54 @@ class User extends Authenticatable
     {
         return $this->hasOne(Collab::class);
     }
+    
+    public function onTrial()
+    {
+        return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+    }
 
-    public function checkLimit($feature)
+    public function checkLimit()
     {
         // Subscribers have unlimited access
         if ($this->subscribed('default')) {
             return true;
         }
 
-        // Reset usage if needed (monthly)
-        if ($this->usage_reset_at && $this->usage_reset_at->lt(now()->startOfMonth())) {
-            $this->update([
-                'scans_used' => 0,
-                'matches_used' => 0,
-                'hives_used' => 0,
-                'usage_reset_at' => now(),
-            ]);
-        } elseif (!$this->usage_reset_at) {
-            $this->update(['usage_reset_at' => now()]);
+        // Trial users have unlimited access
+        if ($this->onTrial()) {
+            return true;
         }
 
-        $limits = [
-            'scans' => 5,
-            'matches' => 5,
-            'hives' => 5,
-        ];
+        // Daily Reset Logic
+        if (!$this->last_token_reset_at || $this->last_token_reset_at->lt(now()->startOfDay())) {
+            $this->update([
+                'daily_tokens_remaining' => 15,
+                'last_token_reset_at' => now(),
+            ]);
+            return true;
+        }
 
-        $usageKey = $feature . '_used';
-        return $this->$usageKey < ($limits[$feature] ?? 0);
+        return $this->daily_tokens_remaining > 0;
     }
 
-    public function incrementUsage($feature)
+    public function consumeToken()
     {
         if ($this->subscribed('default')) {
             return;
         }
-        $usageKey = $feature . '_used';
-        $this->increment($usageKey);
+        
+        if ($this->onTrial()) {
+            return;
+        }
+
+        // Ensure we drag the reset logic here too
+        if (!$this->last_token_reset_at || $this->last_token_reset_at->lt(now()->startOfDay())) {
+             $this->update([
+                'daily_tokens_remaining' => 14, // 15 - 1
+                'last_token_reset_at' => now(),
+            ]);
+        } else {
+            $this->decrement('daily_tokens_remaining');
+        }
     }
 }

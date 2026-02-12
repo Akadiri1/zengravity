@@ -13,13 +13,13 @@ class CollabController extends Controller
     public function findMatches(ZenAiService $zenAi)
     {
         // Check Usage Limit
-        if (!request()->user()->checkLimit('matches')) {
+        if (!request()->user()->checkLimit()) {
             return redirect()->route('subscription.pricing')
-                ->with('error', 'You have used all your free Collab Matches. Upgrade for unlimited networking.');
+                ->with('error', 'Daily limit reached. Upgrade for unlimited networking.');
         }
 
-        // Increment Usage
-        request()->user()->incrementUsage('matches');
+        // Consume Token
+        request()->user()->consumeToken();
 
         // Get the current user's profile
         $userProfile = DB::table('collabs')->where('user_id', Auth::id())->first();

@@ -25,13 +25,13 @@ class SubscriptionController extends Controller
         return $request->user()
             ->newSubscription('default', $priceId)
             ->checkout([
-                'success_url' => route('dashboard'),
+                'success_url' => route('app'),
                 'cancel_url' => route('subscription.pricing'),
             ]);
     }
 
     public function portal(Request $request)
     {
-        return $request->user()->redirectToBillingPortal(route('dashboard'));
+        return $request->user()->redirectToBillingPortal(route('app'));
     }
 }

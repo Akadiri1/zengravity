@@ -13,7 +13,7 @@ Route::get('/app', function () {
     return view('dashboard', compact('scans'));
 })->middleware(['auth', 'verified'])->name('app');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Collab Forge
     Route::post('/collab/profile', [\App\Http\Controllers\CollabController::class, 'storeProfile'])->name('collab.profile');
     Route::get('/collab/matches', [\App\Http\Controllers\CollabController::class, 'findMatches'])->name('collab.matches');

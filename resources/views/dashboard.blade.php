@@ -12,6 +12,50 @@
                 </div>
 
                 <div class="relative group">
+                    @if(auth()->user()->onTrial())
+                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-[32px] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                        <div class="relative bg-[#0a0a0a] border border-white/5 rounded-[32px] p-6 mb-8 overflow-hidden shadow-2xl backdrop-blur-xl flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+                                    🚀
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Commander Trial Active</h3>
+                                    <p class="text-blue-200 text-sm">You have unlimited access to all features.</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-3xl font-black text-white">{{ auth()->user()->trial_ends_at->diffInDays(now()) }}</span>
+                                <span class="text-xs uppercase tracking-wider text-blue-200 block">Days Left</span>
+                            </div>
+                        </div>
+                    @elseif(!auth()->user()->subscribed('default'))
+                        <div class="bg-[#0a0a0a] border border-white/5 rounded-[24px] p-6 mb-8 relative overflow-hidden">
+                            <div class="flex justify-between items-end mb-3 relative z-10">
+                                <div>
+                                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full {{ auth()->user()->daily_tokens_remaining > 5 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-red-500 animate-pulse' }}"></span>
+                                        Daily Tech Ration
+                                    </h3>
+                                    <p class="text-gray-400 text-xs mt-1">Refills automatically every 24h</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-3xl font-black {{ auth()->user()->daily_tokens_remaining > 5 ? 'text-white' : 'text-red-400' }}">
+                                        {{ auth()->user()->daily_tokens_remaining }}
+                                    </span>
+                                    <span class="text-gray-500 text-sm font-bold">/ 15</span>
+                                </div>
+                            </div>
+                            <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden relative z-10">
+                                <div class="h-full rounded-full transition-all duration-500 {{ auth()->user()->daily_tokens_remaining > 5 ? 'bg-gradient-to-r from-blue-500 to-purple-500' : 'bg-red-500' }}" 
+                                     style="width: {{ min((auth()->user()->daily_tokens_remaining / 15) * 100, 100) }}%">
+                                </div>
+                            </div>
+                            <!-- Background glow -->
+                            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-32 h-32 bg-blue-600/10 rounded-full blur-[50px]"></div>
+                        </div>
+                    @endif
+
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-[32px] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                     <div class="relative bg-[#0a0a0a] border border-white/5 rounded-[32px] p-8 md:p-12 overflow-hidden shadow-2xl backdrop-blur-xl">
                         <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px]"></div>
@@ -258,17 +302,7 @@
                         <h3 class="text-xl font-bold text-white mb-2">Ghost Scanner</h3>
                         <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">AI-powered compliance and integrity check for your digital masterpieces.</p>
                         
-                        @if(!auth()->user()->subscribed('default'))
-                            <div class="mt-auto">
-                                <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
-                                    <span>Scans Used</span>
-                                    <span class="{{ auth()->user()->scans_used >= 5 ? 'text-red-400' : 'text-emerald-400' }}">{{ auth()->user()->scans_used }}/5</span>
-                                </div>
-                                <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
-                                    <div class="bg-emerald-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->scans_used / 5) * 100, 100) }}%"></div>
-                                </div>
-                            </div>
-                        @endif
+
                     </div>
 
                     <a href="{{ route('collab.matches') }}" class="group relative">
@@ -282,17 +316,7 @@
                             <h3 class="text-xl font-bold text-white mb-2">Collab Forge</h3>
                             <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">Find your perfect synthetic twin match.</p>
                             
-                            @if(!auth()->user()->subscribed('default'))
-                                <div class="mt-auto">
-                                    <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
-                                        <span>Matches Used</span>
-                                        <span class="{{ auth()->user()->matches_used >= 5 ? 'text-red-400' : 'text-purple-400' }}">{{ auth()->user()->matches_used }}/5</span>
-                                    </div>
-                                    <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
-                                        <div class="bg-purple-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->matches_used / 5) * 100, 100) }}%"></div>
-                                    </div>
-                                </div>
-                            @endif
+
                         </div>
                     </a>
 
@@ -307,17 +331,7 @@
                             <h3 class="text-xl font-bold text-white mb-2">Hive Scout</h3>
                             <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">Real-time niche trend intelligence.</p>
 
-                            @if(!auth()->user()->subscribed('default'))
-                                <div class="mt-auto">
-                                    <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
-                                        <span>Scouts Used</span>
-                                        <span class="{{ auth()->user()->hives_used >= 5 ? 'text-red-400' : 'text-amber-400' }}">{{ auth()->user()->hives_used }}/5</span>
-                                    </div>
-                                    <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
-                                        <div class="bg-amber-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->hives_used / 5) * 100, 100) }}%"></div>
-                                    </div>
-                                </div>
-                            @endif
+
                         </div>
                     </a>
 
