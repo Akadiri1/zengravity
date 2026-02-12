@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: none; /* Remove pointer */
+  display: inline-block;
+  vertical-align: bottom;
+  width: 0;
+  animation: smoothType 6s linear infinite;
+}
+
+@keyframes smoothType {
+  0%, 10% { width: 0; }
+  35%, 85% { width: 7.5ch; } /* Write smoothly to 7.5ch (fits GRAVITY) and hold */
+  100% { width: 0; } /* Smoothly unwrite to loop */
+}
+
+@layer utilities {
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
