@@ -24,9 +24,16 @@
                                     <p class="text-blue-200 text-sm">You have unlimited access to all features.</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-3xl font-black text-white">{{ auth()->user()->trial_ends_at->diffInDays(now()) }}</span>
-                                <span class="text-xs uppercase tracking-wider text-blue-200 block">Days Left</span>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <span class="text-3xl font-black text-white">∞</span>
+                                    <span class="text-xs uppercase tracking-wider text-blue-200 block">Tokens</span>
+                                </div>
+                                <div class="w-px h-10 bg-white/10"></div>
+                                <div>
+                                    <span class="text-3xl font-black text-white">{{ ceil(max(0, now()->floatDiffInDays(auth()->user()->trial_ends_at))) }}</span>
+                                    <span class="text-xs uppercase tracking-wider text-blue-200 block">Days Left</span>
+                                </div>
                             </div>
                         </div>
                     @elseif(!auth()->user()->subscribed('default'))

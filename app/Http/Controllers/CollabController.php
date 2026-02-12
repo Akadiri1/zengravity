@@ -24,9 +24,9 @@ class CollabController extends Controller
         // Get the current user's profile
         $userProfile = DB::table('collabs')->where('user_id', Auth::id())->first();
 
-        // If no profile exists, redirect to dashboard with error
+        // If no profile exists, return the setup view
         if (!$userProfile) {
-            return redirect()->route('app')->with('error', 'Please complete your Collab Profile first to find matches!');
+            return view('collab.setup');
         }
 
         // Search for other creators in the same niche, excluding the current user

@@ -15,6 +15,16 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable, Billable;
 
     /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmail);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -108,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->subscribed('default')) {
             return;
         }
-        
+
         if ($this->onTrial()) {
             return;
         }

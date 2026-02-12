@@ -28,9 +28,13 @@
        :class="expanded || {{ $mobile ? 'true' : 'false' }} ? '' : 'justify-center px-0'">
         
         <!-- Avatar Circle -->
-        <div class="relative w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0 ring-2 ring-white/10 group-hover:ring-purple-500/30 transition-all duration-300">
-            <span class="text-sm font-bold text-white">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
-            <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#050505]"></div>
+        <div class="relative w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0 ring-2 ring-white/10 group-hover:ring-purple-500/30 transition-all duration-300 overflow-hidden">
+            @if(Auth::user()->avatar)
+                <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
+            @else
+                <span class="text-sm font-bold text-white">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+            @endif
+            <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#050505] z-10"></div>
         </div>
 
         <!-- User Info -->

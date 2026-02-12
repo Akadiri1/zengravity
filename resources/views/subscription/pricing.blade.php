@@ -55,7 +55,7 @@
                     <ul class="space-y-4 mb-8 flex-1">
                         <li class="flex items-start gap-3 text-sm text-gray-300">
                             <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            5 AI Scans / month
+                            15 Daily Tokens (Scans/Matches/Hives)
                         </li>
                         <li class="flex items-start gap-3 text-sm text-gray-300">
                             <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
