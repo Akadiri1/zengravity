@@ -249,29 +249,75 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-emerald-500/30 transition duration-300">
+                        <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Ghost Scanner</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">AI-powered compliance and integrity check for your digital masterpieces.</p>
+                        
+                        @if(!auth()->user()->subscribed('default'))
+                            <div class="mt-auto">
+                                <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
+                                    <span>Scans Used</span>
+                                    <span class="{{ auth()->user()->scans_used >= 5 ? 'text-red-400' : 'text-emerald-400' }}">{{ auth()->user()->scans_used }}/5</span>
+                                </div>
+                                <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
+                                    <div class="bg-emerald-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->scans_used / 5) * 100, 100) }}%"></div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
                     <a href="{{ route('collab.matches') }}" class="group relative">
                         <div class="absolute inset-0 bg-purple-600/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-purple-500/30 transition duration-300">
-                            <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-purple-500/30 transition duration-300 flex flex-col h-full">
+                            <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 shrink-0">
                                 <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-white mb-2">Collab Forge</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed font-medium">Find your perfect synthetic twin match.</p>
+                            <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">Find your perfect synthetic twin match.</p>
+                            
+                            @if(!auth()->user()->subscribed('default'))
+                                <div class="mt-auto">
+                                    <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
+                                        <span>Matches Used</span>
+                                        <span class="{{ auth()->user()->matches_used >= 5 ? 'text-red-400' : 'text-purple-400' }}">{{ auth()->user()->matches_used }}/5</span>
+                                    </div>
+                                    <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
+                                        <div class="bg-purple-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->matches_used / 5) * 100, 100) }}%"></div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </a>
 
                     <a href="{{ route('hive.index') }}" class="group relative">
                         <div class="absolute inset-0 bg-amber-600/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-amber-500/30 transition duration-300">
-                            <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-amber-500/30 transition duration-300 flex flex-col h-full">
+                            <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6 shrink-0">
                                 <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-white mb-2">Hive Scout</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed font-medium">Real-time niche trend intelligence.</p>
+                            <p class="text-sm text-gray-500 leading-relaxed font-medium mb-4">Real-time niche trend intelligence.</p>
+
+                            @if(!auth()->user()->subscribed('default'))
+                                <div class="mt-auto">
+                                    <div class="flex justify-between text-[10px] font-bold text-gray-600 mb-1 uppercase tracking-wider">
+                                        <span>Scouts Used</span>
+                                        <span class="{{ auth()->user()->hives_used >= 5 ? 'text-red-400' : 'text-amber-400' }}">{{ auth()->user()->hives_used }}/5</span>
+                                    </div>
+                                    <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
+                                        <div class="bg-amber-600 h-1 rounded-full transition-all duration-500" style="width: {{ min((auth()->user()->hives_used / 5) * 100, 100) }}%"></div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </a>
 

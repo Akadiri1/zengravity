@@ -1,4 +1,27 @@
 <div class="space-y-1 px-3">
+    <!-- Subscription CTA -->
+    <a href="{{ auth()->user()->subscribed('default') ? route('subscription.portal') : route('subscription.pricing') }}" 
+       class="group flex items-center gap-3.5 px-3 py-2.5 mb-4 rounded-xl transition-all duration-300 relative overflow-hidden"
+       :class="expanded || {{ $mobile ? 'true' : 'false' }} ? '{{ auth()->user()->subscribed('default') ? 'bg-white/[0.05] hover:bg-white/10' : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg shadow-purple-500/20' }}' : 'justify-center px-0 bg-transparent hover:bg-white/[0.05]'">
+        
+        <!-- Icon -->
+        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300"
+             :class="expanded || {{ $mobile ? 'true' : 'false' }} ? 'bg-white/10' : '{{ auth()->user()->subscribed('default') ? 'bg-white/[0.05] text-gray-400' : 'bg-gradient-to-br from-blue-500 to-purple-600 text-white ring-2 ring-white/10' }}'">
+            <svg class="w-5 h-5 {{ auth()->user()->subscribed('default') ? '' : 'animate-pulse' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        </div>
+
+        <!-- Text -->
+        <span class="text-sm font-bold text-white tracking-wide whitespace-nowrap"
+              x-show="{{ $mobile ? 'true' : 'expanded' }}"
+              x-transition
+              style="{{ $mobile ? '' : 'display:none;' }}">
+            {{ auth()->user()->subscribed('default') ? 'Manage Plan' : 'Upgrade to Pro' }}
+        </span>
+    </a>
+    
+    <div class="mx-3 mb-3 h-px bg-white/[0.06] flex-shrink-0"></div>
     <!-- User Profile -->
     <a href="{{ route('profile.edit') }}" wire:navigate @click="$store.sidebar.mobileOpen = false" 
        class="group flex items-center gap-3.5 px-3 py-2.5 rounded-2xl hover:bg-white/[0.04] transition-all duration-300"

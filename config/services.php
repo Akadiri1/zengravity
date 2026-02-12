@@ -60,5 +60,13 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI', '/auth/google/callback'),
     ],
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'pro_monthly_id' => env('STRIPE_PRO_MONTHLY_ID'),
+        'pro_yearly_id' => env('STRIPE_PRO_YEARLY_ID'),
+        'team_monthly_id' => env('STRIPE_TEAM_MONTHLY_ID'),
+        'team_yearly_id' => env('STRIPE_TEAM_YEARLY_ID'),
+    ],
 
 ];

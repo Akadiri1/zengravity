@@ -13,6 +13,15 @@ class HiveController extends Controller
      */
     public function index(ZenAiService $zenAi)
     {
+        // Check Usage Limit
+        if (!request()->user()->checkLimit('hives')) {
+            return redirect()->route('subscription.pricing')
+                ->with('error', 'You have used all your free Hive Scouts. Upgrade for unlimited trend insights.');
+        }
+
+        // Increment Usage
+        request()->user()->incrementUsage('hives');
+
         // Mocking some trend data for now
         $baseHives = [
             ['name' => 'West Africa Urban Farming', 'platform' => 'TikTok', 'surge' => 145, 'competition' => 'Low'],

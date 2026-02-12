@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Laravel\Cashier\Billable;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',
+        'avatar',
+        'scans_used',
+        'matches_used',
+        'hives_used',
+        'usage_reset_at',
     ];
 
     /**
@@ -43,6 +51,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'usage_reset_at' => 'datetime',
         ];
     }
 
@@ -54,5 +63,43 @@ class User extends Authenticatable
     public function collab()
     {
         return $this->hasOne(Collab::class);
+    }
+
+    public function checkLimit($feature)
+    {
+        // Subscribers have unlimited access
+        if ($this->subscribed('default')) {
+            return true;
+        }
+
+        // Reset usage if needed (monthly)
+        if ($this->usage_reset_at && $this->usage_reset_at->lt(now()->startOfMonth())) {
+            $this->update([
+                'scans_used' => 0,
+                'matches_used' => 0,
+                'hives_used' => 0,
+                'usage_reset_at' => now(),
+            ]);
+        } elseif (!$this->usage_reset_at) {
+            $this->update(['usage_reset_at' => now()]);
+        }
+
+        $limits = [
+            'scans' => 5,
+            'matches' => 5,
+            'hives' => 5,
+        ];
+
+        $usageKey = $feature . '_used';
+        return $this->$usageKey < ($limits[$feature] ?? 0);
+    }
+
+    public function incrementUsage($feature)
+    {
+        if ($this->subscribed('default')) {
+            return;
+        }
+        $usageKey = $feature . '_used';
+        $this->increment($usageKey);
     }
 }

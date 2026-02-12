@@ -1,4 +1,15 @@
 import './bootstrap';
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+document.addEventListener('alpine:init', () => {
+    Alpine.store('sidebar', {
+        mobileOpen: false,
+    })
+});
+
+Alpine.start();
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -12,9 +23,5 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-document.addEventListener('alpine:init', () => {
-    Alpine.store('sidebar', {
-        mobileOpen: false,
-    })
-});
+
 

@@ -18,6 +18,14 @@ class ScannerController extends Controller
 
     public function store(Request $request)
     {
+        // Check Usage Limit
+        if (!$request->user()->checkLimit('scans')) {
+            if ($request->wantsJson()) {
+                return response()->json(['message' => 'Limit reached. Upgrade to Pro.'], 403);
+            }
+            return redirect()->route('subscription.pricing');
+        }
+
         // Validate the uploaded file
         $request->validate([
             'media' => [
@@ -40,6 +48,9 @@ class ScannerController extends Controller
 
             // Use the ZenAi Bridge (Constructor Injected)
             $analysis = $this->zenAi->analyzeSafety($path, $mimeType);
+
+            // Increment Usage
+            $request->user()->incrementUsage('scans');
 
             $scan = Scan::create([
                 'user_id' => Auth::id(),
