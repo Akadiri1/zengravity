@@ -22,6 +22,10 @@ class SubscriptionController extends Controller
             default => abort(404),
         };
 
+        if (!$priceId) {
+            abort(500, "Stripe Price ID for '{$plan}' is not configured in your .env file.");
+        }
+
         return $request->user()
             ->newSubscription('default', $priceId)
             ->checkout([

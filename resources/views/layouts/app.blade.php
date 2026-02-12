@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-sans antialiased bg-[#050810] text-gray-200">
         <div class="flex h-screen overflow-hidden bg-[#050810]" x-data="{ sidebarOpen: false }">
@@ -41,7 +42,7 @@
                             $statusColor = $status === 'PRO' ? 'text-blue-400 bg-blue-500/10' : ($status === 'TRIAL' ? 'text-purple-400 bg-purple-500/10' : 'text-gray-400 bg-white/10');
                         @endphp
                         <span class="text-[10px] font-black {{ $statusColor }} uppercase tracking-wider px-2.5 py-1 rounded-lg">{{ $status }}</span>
-                        <a href="{{ route('profile.edit') }}" class="relative w-9 h-9 rounded-full bg-gradient-to-br from-red-500 via-yellow-500 via-green-500 to-blue-500 p-[2px] group">
+                        <a href="{{ route('profile.edit') }}" wire:navigate class="relative w-9 h-9 rounded-full bg-gradient-to-br from-red-500 via-yellow-500 via-green-500 to-blue-500 p-[2px] group">
                             <div class="w-full h-full bg-[#060608] rounded-full flex items-center justify-center text-xs font-bold text-white group-hover:bg-[#0a0a0a] transition overflow-hidden">
                                 @if(Auth::user()->avatar)
                                     <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
@@ -67,7 +68,7 @@
                             $statusColor = $status === 'PRO' ? 'text-blue-400 bg-blue-500/10' : ($status === 'TRIAL' ? 'text-purple-400 bg-purple-500/10' : 'text-gray-400 bg-white/10');
                         @endphp
                         <span class="text-[10px] font-black {{ $statusColor }} uppercase tracking-wider px-2.5 py-1 rounded-lg">{{ $status }}</span>
-                        <a href="{{ route('profile.edit') }}" class="relative w-9 h-9 rounded-full bg-gradient-to-br from-red-500 via-yellow-500 via-green-500 to-blue-500 p-[2px] group">
+                        <a href="{{ route('profile.edit') }}" wire:navigate class="relative w-9 h-9 rounded-full bg-gradient-to-br from-red-500 via-yellow-500 via-green-500 to-blue-500 p-[2px] group">
                             <div class="w-full h-full bg-[#050810] rounded-full flex items-center justify-center text-xs font-bold text-white group-hover:bg-[#0a0a0a] transition overflow-hidden">
                                 @if(Auth::user()->avatar)
                                     <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
@@ -86,5 +87,6 @@
                 </main>
             </div>
         </div>
+        @livewireScripts
     </body>
 </html>

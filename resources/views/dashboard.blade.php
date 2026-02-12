@@ -279,7 +279,11 @@
                                                 })
                                                 .then(data => {
                                                     if (data.redirect) {
-                                                        window.location.href = data.redirect;
+                                                        if (typeof Livewire !== 'undefined') {
+                                                            Livewire.navigate(data.redirect);
+                                                        } else {
+                                                            window.location.href = data.redirect;
+                                                        }
                                                     } else {
                                                         this.errorMessage = 'Scan complete!';
                                                         this.uploading = false;
@@ -312,7 +316,7 @@
 
                     </div>
 
-                    <a href="{{ route('collab.matches') }}" class="group relative">
+                    <a href="{{ route('collab.matches') }}" wire:navigate class="group relative">
                         <div class="absolute inset-0 bg-purple-600/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-purple-500/30 transition duration-300 flex flex-col h-full">
                             <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 shrink-0">
@@ -327,7 +331,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('hive.index') }}" class="group relative">
+                    <a href="{{ route('hive.index') }}" wire:navigate class="group relative">
                         <div class="absolute inset-0 bg-amber-600/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-amber-500/30 transition duration-300 flex flex-col h-full">
                             <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6 shrink-0">
@@ -342,7 +346,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('scans.index') }}" class="group relative lg:col-span-1">
+                    <a href="{{ route('scans.index') }}" wire:navigate class="group relative lg:col-span-1">
                         <div class="absolute inset-0 bg-green-600/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <div class="relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:border-green-500/30 transition duration-300 h-full">
                             <div class="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6">

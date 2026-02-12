@@ -41,7 +41,7 @@
             $isActive = request()->routeIs($link['routeMatch']);
             $color = $link['color'];
         @endphp
-        <a href="{{ route($link['route']) }}" 
+        <a href="{{ route($link['route']) }}" wire:navigate
            class="group relative flex items-center gap-3.5 px-3 py-2.5 rounded-2xl transition-all duration-300 {{ $isActive ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]' }}"
            :class="expanded || {{ $mobile ? 'true' : 'false' }} ? '' : 'justify-center px-0'">
             
@@ -93,7 +93,7 @@
     @endphp
 
     @forelse($recentScans as $scan)
-        <a href="{{ route('scans.show', $scan) }}" 
+        <a href="{{ route('scans.show', $scan) }}" wire:navigate
            class="group flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/[0.04] transition-all duration-200"
            :class="expanded || {{ $mobile ? 'true' : 'false' }} ? '' : 'justify-center px-0'">
             <span class="w-2 h-2 rounded-full shrink-0 {{ $scan->safety_score > 80 ? 'bg-emerald-500' : ($scan->safety_score > 50 ? 'bg-amber-500' : 'bg-red-500') }}"></span>
