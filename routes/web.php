@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pricing', [App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscription.pricing');
     Route::get('/checkout/{plan}', [App\Http\Controllers\SubscriptionController::class, 'checkout'])->name('subscription.checkout');
     Route::get('/billing-portal', [App\Http\Controllers\SubscriptionController::class, 'portal'])->name('subscription.portal');
+    Route::get('/subscription/sync', [App\Http\Controllers\SubscriptionController::class, 'sync'])->name('subscription.sync');
 });
 
 require __DIR__.'/auth.php';

@@ -14,6 +14,33 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+
+        <style>
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            ::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            html, body {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+
+            @keyframes typing {
+                from { width: 0 }
+                to { width: 100% }
+            }
+            @keyframes blink-caret {
+                from, to { border-color: transparent }
+                50% { border-color: #a855f7; }
+            }
+            .typewriter {
+                animation: 
+                    typing 3s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                    blink-caret .75s step-end infinite;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased bg-[#050810] text-gray-200">
         <div class="flex h-screen overflow-hidden bg-[#050810]" x-data="{ sidebarOpen: false }">

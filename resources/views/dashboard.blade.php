@@ -12,7 +12,28 @@
                 </div>
 
                 <div class="relative group">
-                    @if(auth()->user()->onTrial())
+                    @if(auth()->user()->subscribed('default'))
+                        <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 rounded-[32px] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                        <div class="relative bg-[#0a0a0a] border border-white/5 rounded-[32px] p-6 mb-8 overflow-hidden shadow-2xl backdrop-blur-xl flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl">
+                                    💎
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Commander PRO Status</h3>
+                                    <p class="text-emerald-200 text-sm italic">Maximum clearance granted. All systems operational.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <span class="text-3xl font-black text-white">∞</span>
+                                    <span class="text-xs uppercase tracking-wider text-emerald-200 block">Tokens</span>
+                                </div>
+                                <div class="w-px h-10 bg-white/10"></div>
+                                <a href="{{ route('subscription.portal') }}" target="_blank" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-white hover:bg-white/10 transition">Manage</a>
+                            </div>
+                        </div>
+                    @elseif(auth()->user()->onTrial())
                         <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-[32px] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                         <div class="relative bg-[#0a0a0a] border border-white/5 rounded-[32px] p-6 mb-8 overflow-hidden shadow-2xl backdrop-blur-xl flex items-center justify-between">
                             <div class="flex items-center gap-4">
@@ -36,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                    @elseif(!auth()->user()->subscribed('default'))
+                    @else
                         <div class="bg-[#0a0a0a] border border-white/5 rounded-[24px] p-6 mb-8 relative overflow-hidden">
                             <div class="flex justify-between items-end mb-3 relative z-10">
                                 <div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,35 +9,95 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-100 antialiased bg-[#050810]">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#050810] relative overflow-hidden">
+    <body class="bg-black text-white antialiased selection:bg-blue-500/30 font-['Instrument_Sans']">
+        <div class="min-h-screen flex flex-col lg:flex-row overflow-hidden relative">
             
-            <!-- Background Ambient Glow -->
-            <div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <!-- Left Side: Auth Forms -->
+            <div class="w-full lg:w-[450px] shrink-0 bg-[#070707] border-r border-white/5 relative z-20 flex flex-col shadow-2xl">
+                <!-- Branding Header -->
+                <div class="p-8 pb-0">
+                    <a href="/" class="group">
+                        <span class="text-3xl font-black text-white tracking-tighter uppercase transition-all duration-300 group-hover:opacity-80 flex items-center gap-1" 
+                              style="text-shadow: -1.5px -0.5px 0 rgba(255, 0, 0, 0.4), 1.5px 0.5px 0 rgba(0, 255, 255, 0.4);">
+                            ZEN<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 typewriter inline-block overflow-hidden whitespace-nowrap border-r-2 border-purple-500/50 pr-1">GRAVITY</span>
+                        </span>
+                    </a>
+                </div>
 
-            <div class="mb-8 relative z-10">
-                <a href="/" class="flex flex-col items-center group">
-                    <span class="text-4xl font-black text-white tracking-tighter uppercase leading-none mb-2 transition-transform duration-300 group-hover:scale-105" 
-                          style="text-shadow: -1.5px -0.5px 0 rgba(255, 0, 0, 0.5), 1.5px 0.5px 0 rgba(0, 255, 255, 0.5);">
-                        ZEN<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 font-mono typewriter inline-block" style="text-shadow: none;">GRAVITY</span>
-                    </span>
-                </a>
+                <!-- Form Container -->
+                <div class="flex-1 flex flex-col justify-center px-8 lg:px-12 py-12">
+                    <div class="w-full max-w-sm mx-auto">
+                        {{ $slot }}
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="p-8 text-xs text-gray-600 font-medium">
+                    &copy; {{ date('Y') }} ZenGravity. System Online.
+                </div>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-8 py-8 bg-[#0a0a0a] shadow-2xl overflow-hidden sm:rounded-3xl border border-white/5 relative z-10 backdrop-blur-sm">
-                {{ $slot }}
+            <!-- Right Side: Feature Showcase -->
+            <div class="hidden lg:flex flex-1 relative bg-black items-center justify-center overflow-hidden">
+                <!-- Ambient Background Effects -->
+                <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[150px] -mr-96 -mt-96 animate-pulse"></div>
+                <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] -ml-48 -mb-48"></div>
+                
+                <!-- Grid Pattern Overlay -->
+                <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+                <!-- Dynamic Content Slot for Features -->
+                <div class="relative z-10 w-full max-w-2xl px-12">
+                    @yield('feature_showcase')
+                </div>
+
+                <!-- Floating Decor Elements -->
+                <div class="absolute top-20 right-20 w-32 h-32 border border-white/5 rounded-full animate-spin-slow"></div>
+                <div class="absolute bottom-40 right-40 w-16 h-16 border border-white/5 rotate-45"></div>
             </div>
-            
-            <!-- Footer Links -->
-            <div class="mt-8 text-center text-xs text-gray-600 relative z-10">
-                &copy; {{ date('Y') }} ZenGravity. All rights reserved.
-            </div>
+
+            <!-- Ambient Glow for Mobile (at bottom) -->
+            <div class="lg:hidden absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-blue-500/10 to-transparent pointer-events-none"></div>
         </div>
+
+        <style>
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            ::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            html, body {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+
+            @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-spin-slow {
+                animation: spin-slow 20s linear infinite;
+            }
+            
+            @keyframes typing {
+                from { width: 0 }
+                to { width: 100% }
+            }
+            @keyframes blink-caret {
+                from, to { border-color: transparent }
+                50% { border-color: #a855f7; }
+            }
+            .typewriter {
+                animation: 
+                    typing 3s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                    blink-caret .75s step-end infinite;
+            }
+        </style>
     </body>
 </html>

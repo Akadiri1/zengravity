@@ -27,4 +27,34 @@
                 </button>
             </form>
     </div>
+
+    <x-slot name="feature_showcase">
+        <div class="max-w-md">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 mb-6 group">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                <span class="text-[10px] font-bold text-orange-400 uppercase tracking-widest">Awaiting Validation</span>
+            </div>
+            
+            <h2 class="text-4xl font-black text-white leading-tight mb-6">
+                Light the <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 italic">Trusted Beacon</span>
+            </h2>
+            
+            <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+                Verification ensures your connection to the ZenGravity network is legitimate and secure. One click and you're in.
+            </p>
+
+            <div class="space-y-4">
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/5">
+                    <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-500">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-white font-bold text-sm">Waiting for signal...</div>
+                        <div class="text-[10px] text-gray-500 uppercase font-black">Email Delivery Engine</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-slot>
 </x-guest-layout>
