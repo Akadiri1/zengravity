@@ -34,6 +34,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout/{plan}', [App\Http\Controllers\SubscriptionController::class, 'checkout'])->name('subscription.checkout');
     Route::get('/billing-portal', [App\Http\Controllers\SubscriptionController::class, 'portal'])->name('subscription.portal');
     Route::get('/subscription/sync', [App\Http\Controllers\SubscriptionController::class, 'sync'])->name('subscription.sync');
+
+    // Exam Forge (Module 4)
+    Route::prefix('exam')->name('exam.')->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\ExamController::class, 'dashboard'])->name('dashboard');
+        Route::post('/upload', [\App\Http\Controllers\ExamController::class, 'uploadMaterial'])->name('upload');
+    });
+
+    // API Routes for Scraper
+    Route::post('/api/exam/solve', [\App\Http\Controllers\ExamController::class, 'solve'])->name('api.solve');
+    
+    // Reverse Proxy Tunnel
+    Route::any('/proxy', [\App\Http\Controllers\ProxyController::class, 'browse'])->name('proxy');
+    
+    // Proxy Fallback for "Leaked" Relative Assets (Moodle specific)
+    Route::any('/theme/{path}', [\App\Http\Controllers\ProxyController::class, 'fallback'])->where('path', '.*');
+    Route::any('/lib/{path}', [\App\Http\Controllers\ProxyController::class, 'fallback'])->where('path', '.*');
+    Route::any('/pluginfile.php/{path}', [\App\Http\Controllers\ProxyController::class, 'fallback'])->where('path', '.*');
+    Route::any('/extensions/{path}', [\App\Http\Controllers\ProxyController::class, 'fallback'])->where('path', '.*');
+    // Admin Routes
+    Route::middleware([\App\Http\Middleware\EnsureUserIsAdmin::class])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
+        Route::put('/users/{user}/note', [\App\Http\Controllers\AdminController::class, 'updateNote'])->name('users.note');
+        Route::post('/changelog', [\App\Http\Controllers\AdminController::class, 'storeChangelog'])->name('changelog.store');
+        Route::delete('/changelog/{changelog}', [\App\Http\Controllers\AdminController::class, 'deleteChangelog'])->name('changelog.delete');
+    });
+
+    // Public Updates
+    Route::get('/updates', [\App\Http\Controllers\ChangelogController::class, 'index'])->name('updates');
 });
 
 require __DIR__.'/auth.php';

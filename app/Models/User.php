@@ -38,6 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'trial_ends_at',
         'daily_tokens_remaining',
         'last_token_reset_at',
+        'is_admin',
+        'ip_address',
+        'country',
+        'admin_notes',
     ];
 
     /**
@@ -62,6 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
             'last_token_reset_at' => 'datetime',
+            'is_admin' => 'boolean',
         ];
     }
 
